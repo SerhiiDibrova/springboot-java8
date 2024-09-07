@@ -1,8 +1,11 @@
 package hello.model;
 
+import hello.model.UserType;
+
 public class Customer {
     private long id;
     private String firstName, lastName;
+    private UserType userType;
 
     @Override
     public String toString() {
@@ -17,6 +20,14 @@ public class Customer {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public long getId() {
