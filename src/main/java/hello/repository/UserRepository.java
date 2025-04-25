@@ -1,13 +1,11 @@
 package hello.repository;
 
-import model.User;
-import java.util.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public class UserRepository {
-    private static final List<User> db = Arrays.asList(
-    );
-
-    public Optional<User> getById(int id) {
-        return db.stream().filter(user -> user.getId() == id).findFirst();
-    }
+public interface UserRepository extends JpaRepository<User, Long> {
+    
+    @Query("SELECT u.id FROM User u WHERE u.default = 1 AND u.role = 'system' ORDER BY u.id ASC")
+    Long findDefaultManagerId();
 }
