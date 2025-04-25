@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>Basic Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1>Basic Form</h1>
+    <form th:object="${request}" method="post" th:action="@{/submitForm}">
+        <div th:if="${#fields.hasErrors()}">
+            <ul>
+                <li th:each="error : ${#fields.errors()}" th:text="${error}">Error</li>
+            </ul>
+        </div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" th:errorclass="error">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" th:errorclass="error">
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

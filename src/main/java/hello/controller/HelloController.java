@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RestController
 public class HelloController {
 
-
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
     String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate = "-------------Split All Id With Colon," +
@@ -34,7 +33,6 @@ public class HelloController {
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
 
-
     @Autowired
     private TopicService topicService;
 
@@ -45,6 +43,9 @@ public class HelloController {
      */
     @RequestMapping("/datetime")
     public String index() {
+        if (topicService == null) {
+            return "TopicService is null";
+        }
         TimeClient myTimeClient = new SimpleTimeClient();
         LocalDateTime localDateTime = LocalDateTime.now();
         return "Greetings from Spring Boot! ----------------------" +
@@ -57,7 +58,6 @@ public class HelloController {
 
     }
 
-
     /**
      * String Operations in Java 8
      *
@@ -65,20 +65,24 @@ public class HelloController {
      */
     @RequestMapping("/topic/string/operation")
     public String showStringOperation() {
+        if (topicService == null) {
+            return "TopicService is null";
+        }
+        try {
+            String join = topicService.returnAllTopicIDWithStringSlicing();
+            String makeDistinctAndSortCharacters = topicService.makeDistinctAndSortCharacters(join);
+            String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin = topicService
+                    .splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin(join);
+            String findIdHavingCharacter = topicService.findIdHavingCharacter();
 
-        String join = topicService.returnAllTopicIDWithStringSlicing();
-        String makeDistinctAndSortCharacters = topicService.makeDistinctAndSortCharacters(join);
-        String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin = topicService
-                .splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin(join);
-        String findIdHavingCharacter = topicService.findIdHavingCharacter();
-
-        return joinTemplate + join
-                + makeDistinctAndSortCharactersTemplate + makeDistinctAndSortCharacters
-                + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin
-                + findIdHavingCharacterTemplate + findIdHavingCharacter;
-
+            return joinTemplate + join
+                    + makeDistinctAndSortCharactersTemplate + makeDistinctAndSortCharacters
+                    + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin
+                    + findIdHavingCharacterTemplate + findIdHavingCharacter;
+        } catch (Exception e) {
+            return "An error occurred: " + e.getMessage();
+        }
     }
-
 
     /**
      * File Operation in Java 8
@@ -86,16 +90,20 @@ public class HelloController {
      */
     @RequestMapping("/topic/file/operation")
     public String showFileOperation() {
-        String findAllFilesInPathAndSort = topicService.findAllFilesInPathAndSort();
-        String findParticularFileInPathAndSort = topicService.findParticularFileInPathAndSort();
-        String findParticularFileInPathAndSortWithWalkFunction = topicService.findParticularFileInPathAndSortWithWalkFunction();
-        String readFileWithStreamFunction = topicService.readFileWithStreamFunction();
-        return findAllFilesInPathAndSortTemplate + findAllFilesInPathAndSort
-                + findParticularFileInPathAndSortTemplate + findParticularFileInPathAndSort
-                + findParticularFileInPathAndSortWithWalkFunctionTemplate + findParticularFileInPathAndSortWithWalkFunction
-                + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
+        if (topicService == null) {
+            return "TopicService is null";
+        }
+        try {
+            String findAllFilesInPathAndSort = topicService.findAllFilesInPathAndSort();
+            String findParticularFileInPathAndSort = topicService.findParticularFileInPathAndSort();
+            String findParticularFileInPathAndSortWithWalkFunction = topicService.findParticularFileInPathAndSortWithWalkFunction();
+            String readFileWithStreamFunction = topicService.readFileWithStreamFunction();
+            return findAllFilesInPathAndSortTemplate + findAllFilesInPathAndSort
+                    + findParticularFileInPathAndSortTemplate + findParticularFileInPathAndSort
+                    + findParticularFileInPathAndSortWithWalkFunctionTemplate + findParticularFileInPathAndSortWithWalkFunction
+                    + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
+        } catch (Exception e) {
+            return "An error occurred: " + e.getMessage();
+        }
     }
-
-
-
 }

@@ -2,12 +2,14 @@ package hello;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import hello.model.Customer;
 import hello.model.Quote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.FormattingTuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,14 +20,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
+import hello.repository.DatabaseConnection;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static ApplicationContext ctx;
 
     public static void main(String[] args) {
 
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        ctx = SpringApplication.run(Application.class, args);
         
         System.out.println("Let's inspect the beans provided by Spring Boot:");
         
@@ -35,11 +40,28 @@ public class Application implements CommandLineRunner {
             System.out.println(beanName);
         }
 
+        startup_event();
+
         RestTemplate restTemplate =  new RestTemplate();
         Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
         log.info(quote.toString());
     }
 
+    public static void startup_event() {
+        Logger logger = LoggerFactory.getLogger("hello");
+        FormattingTuple ft = new FormattingTuple(
+                "%1$tF %1$tT - %2$s - %3$s%n",
+                System.currentTimeMillis(),
+                "INFO",
+                "Application started."
+        );
+        logger.info(ft.getMessage(), ft.getThrowable());
+        ctx.getBeanFactory().registerSingleton("logger", logger);
+
+        String dbUri = ctx.getEnvironment().getProperty("spring.datasource.url");
+        DatabaseConnection dbConnection = new DatabaseConnection(dbUri);
+        ctx.getBeanFactory().registerSingleton("db_connection", dbConnection);
+    }
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -54,7 +76,6 @@ public class Application implements CommandLineRunner {
             log.info(quote.toString());
         };
     }
-
 
     @Autowired
     JdbcTemplate jdbcTemplate;
