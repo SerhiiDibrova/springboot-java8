@@ -6,23 +6,17 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import lombok.Data;
 
-@Entity
-@Table(name = "users")
 @Data
-public class User {
-
+@Entity
+@Table(name = "roles")
+public class Role {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role roleId;
-
-    @Column(name = "default_manager")
-    private Integer defaultManager;
+    @Column(name = "role", nullable = false, unique = true)
+    private String role;
 }
