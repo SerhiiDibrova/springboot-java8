@@ -1,0 +1,31 @@
+package hello.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class SalesDataService {
+
+    @Autowired
+    private SalesDataRepository salesDataRepository;
+
+    public List<SalesDataDTO> getSalesData(Integer orderId, List<TempItemDTO> tempItems) {
+        if (orderId == null || tempItems == null || tempItems.isEmpty() || !isValidTempItems(tempItems)) {
+            throw new IllegalArgumentException("Invalid input parameters");
+        }
+        try {
+            return salesDataRepository.getSalesData(orderId, tempItems);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error retrieving sales data", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error occurred", e);
+        }
+    }
+
+    private boolean isValidTempItems(List<TempItemDTO> tempItems) {
+        // Implement validation logic for TempItemDTO
+        return true; // Placeholder for actual validation
+    }
+}

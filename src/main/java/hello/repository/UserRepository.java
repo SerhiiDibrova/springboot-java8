@@ -1,13 +1,9 @@
 package hello.repository;
 
-import model.User;
-import java.util.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import hello.model.User;
+import java.util.List;
 
-public class UserRepository {
-    private static final List<User> db = Arrays.asList(
-    );
-
-    public Optional<User> getById(int id) {
-        return db.stream().filter(user -> user.getId() == id).findFirst();
-    }
+public interface UserRepository extends JpaRepository<User, Integer> {
+    List<User> findTopByDefaultAndRole_Role(Integer defaultValue, String role);
 }
