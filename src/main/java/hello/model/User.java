@@ -1,23 +1,50 @@
 package hello.model;
 
-package model;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
+@Entity
+@Table(name = "users")
 public class User {
-    private int id;
-    private String name;
 
-    // Constructors
-    public User() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public User(int id, String name) {
-        this.id = id;
-        this.name = name;
+    @Column(name = "role_id")
+    private Integer roleId;
+
+    @Column(name = "default")
+    private Integer default;
+
+    public User() {
     }
 
-    // Getters & Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public Integer getDefault() {
+        return default;
+    }
+
+    public void setDefault(Integer default) {
+        this.default = default;
+    }
 }
