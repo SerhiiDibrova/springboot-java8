@@ -1,10 +1,9 @@
 package hello.repository;
 
+import hello.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-import hello.entity.UserDB;
-
-@Repository
-public interface UserRepository extends JpaRepository<UserDB, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findFirstByDefaultAndRole_Role(boolean defaultValue, String role);
 }
