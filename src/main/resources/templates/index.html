@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Conversion</title>
+</head>
+<body>
+    <header>
+        <h1>Data Conversion Tool</h1>
+    </header>
+    <form action="/json2xml" method="post" th:onsubmit="if(!document.getElementById('jsonInput').value) { alert('JSON Input is required!'); return false; }">
+        <label for="jsonInput">JSON Input:</label>
+        <textarea id="jsonInput" name="jsonInput" rows="10" cols="50" th:placeholder="'Enter JSON here...'"></textarea>
+        <button type="submit">Convert JSON to XML</button>
+    </form>
+    <form action="/xml2json" method="post" th:onsubmit="if(!document.getElementById('xmlInput').value) { alert('XML Input is required!'); return false; }">
+        <label for="xmlInput">XML Input:</label>
+        <textarea id="xmlInput" name="xmlInput" rows="10" cols="50" th:placeholder="'Enter XML here...'"></textarea>
+        <button type="submit">Convert XML to JSON</button>
+    </form>
+</body>
+</html>
