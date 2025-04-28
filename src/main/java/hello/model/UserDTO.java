@@ -1,15 +1,17 @@
 package hello.model;
 
-package model;
+import org.springframework.http.ResponseEntity;
 
-public class User {
+import java.util.Optional;
+
+public class UserDTO {
     private int id;
     private String name;
 
     // Constructors
-    public User() {}
+    public UserDTO() {}
 
-    public User(int id, String name) {
+    public UserDTO(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -20,4 +22,5 @@ public class User {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
 }
