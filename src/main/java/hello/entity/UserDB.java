@@ -5,9 +5,10 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserDB {
 
     @Id
@@ -16,15 +17,23 @@ public class UserDB {
 
     private String name;
 
-    // Default constructor required by JPA
+    @Column(unique = true)
+    private String email;
+
+    private String value;
+
     public UserDB() {}
 
-    // Convenience constructor
     public UserDB(String name) {
         this.name = name;
     }
 
-    // Getters & Setters
+    public UserDB(String name, String email, String value) {
+        this.name = name;
+        this.email = email;
+        this.value = value;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -39,7 +48,20 @@ public class UserDB {
         this.name = name;
     }
 
-    // Optional: equals/hashCode based on id
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,9 +75,8 @@ public class UserDB {
         return 31;
     }
 
-    // Optional: nice to have
     @Override
     public String toString() {
-        return "User{id=" + id + ", name='" + name + "'}";
+        return "User{id=" + id + ", name='" + name + "', email='" + email + "', value='" + value + "'}";
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to XML and XML to JSON Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Converter Tool</h1>
+    <div>
+        <h2>JSON to XML</h2>
+        <form id="jsonToXmlForm" action="/convertJsonToXml" method="post" novalidate>
+            <label for="jsonInput" aria-label="JSON Input">JSON Input:</label>
+            <textarea id="jsonInput" name="jsonInput" rows="10" cols="50" required aria-required="true"></textarea>
+            <button type="submit">Convert to XML</button>
+            <div id="jsonError" aria-live="polite" style="color:red;"></div>
+        </form>
+    </div>
+    <div>
+        <h2>XML to JSON</h2>
+        <form id="xmlToJsonForm" action="/convertXmlToJson" method="post" novalidate>
+            <label for="xmlInput" aria-label="XML Input">XML Input:</label>
+            <textarea id="xmlInput" name="xmlInput" rows="10" cols="50" required aria-required="true"></textarea>
+            <button type="submit">Convert to JSON</button>
+            <div id="xmlError" aria-live="polite" style="color:red;"></div>
+        </form>
+    </div>
+    <div>
+        <h2>Results</h2>
+        <div id="results">
+            <p th:text="${result}"></p>
+        </div>
+    </div>
+</body>
+</html>
