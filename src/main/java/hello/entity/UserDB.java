@@ -7,14 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private String email;
+    private String value;
 
     // Default constructor required by JPA
     public UserDB() {}
@@ -22,6 +23,12 @@ public class UserDB {
     // Convenience constructor
     public UserDB(String name) {
         this.name = name;
+    }
+
+    // Overloaded constructor
+    public UserDB(String email, String value) {
+        this.email = email;
+        this.value = value;
     }
 
     // Getters & Setters
@@ -32,11 +39,18 @@ public class UserDB {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
     }
 
     // Optional: equals/hashCode based on id
@@ -56,6 +70,6 @@ public class UserDB {
     // Optional: nice to have
     @Override
     public String toString() {
-        return "User{id=" + id + ", name='" + name + "'}";
+        return "User{id=" + id + ", email='" + email + "', value='" + value + "'}";
     }
 }

@@ -1,4 +1,3 @@
-// src/main/java/hello/model/Product.java
 package hello.entity;
 
 import javax.persistence.Entity;
@@ -7,9 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-/**
- * Product entity mapped to the "products" table.
- */
 @Entity
 @Table(name = "product")
 public class ProductDB {
@@ -19,16 +15,19 @@ public class ProductDB {
     private Long id;
 
     private String name;
+    private double price;
 
-    // Default constructor required by JPA
     public ProductDB() {}
 
-    // Convenience constructor
     public ProductDB(String name) {
         this.name = name;
     }
 
-    // Getters & Setters
+    public ProductDB(String name, double price) {
+        this.name = name;
+        setPrice(price);
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,23 +42,31 @@ public class ProductDB {
         this.name = name;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ProductDB)) return false;
         ProductDB other = (ProductDB) o;
-        return id != null && id.equals(other.getId());
+        return id != null && id.equals(other.getId()) && price == other.price;
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return 31 * (id != null ? id.hashCode() : 0) + Double.hashCode(price);
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Product{id=" + id + ", name='" + name + "'}";
+        return "Product{id=" + id + ", name='" + name + "', price=" + price + "}";
     }
 }

@@ -5,10 +5,9 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+import java.util.List;
 
-/**
- * Order entity mapped to the "orders" table.
- */
 @Entity
 @Table(name = "order")
 public class OrderDB {
@@ -19,15 +18,15 @@ public class OrderDB {
 
     private String name;
 
-    // Default constructor required by JPA
+    @OneToMany
+    private List<ProductDB> products;
+
     public OrderDB() {}
 
-    // Convenience constructor
     public OrderDB(String name) {
         this.name = name;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -42,7 +41,13 @@ public class OrderDB {
         this.name = name;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public List<ProductDB> getProducts() {
+        return products;
+    }
+    public void setProducts(List<ProductDB> products) {
+        this.products = products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,10 +58,9 @@ public class OrderDB {
 
     @Override
     public int hashCode() {
-        return 31;
+        return 31 * (id != null ? id.hashCode() : 0);
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
         return "Order{id=" + id + ", name='" + name + "'}";

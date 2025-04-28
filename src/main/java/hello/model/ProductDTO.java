@@ -1,8 +1,14 @@
 package hello.model;
 
+import lombok.Data;
+
+@Data
 public class ProductDTO {
     private long id;
     private String name;
+    private String description;
+    private double price;
+    private boolean in_stock;
 
     // Constructors
     public ProductDTO() {}
@@ -12,10 +18,11 @@ public class ProductDTO {
         this.name = name;
     }
 
-    // Getters & Setters
-    public long getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public ProductDTO(long id, String name, String description, double price, boolean in_stock) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.in_stock = in_stock;
+    }
 }
