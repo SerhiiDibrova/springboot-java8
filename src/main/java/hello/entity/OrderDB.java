@@ -5,10 +5,11 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.ElementCollection;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.ArrayList;
 
-/**
- * Order entity mapped to the "orders" table.
- */
 @Entity
 @Table(name = "order")
 public class OrderDB {
@@ -17,17 +18,22 @@ public class OrderDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @NotNull
+    private String userEmail;
 
-    // Default constructor required by JPA
+    @ElementCollection
+    @NotNull
+    private List<Long> productIds = new ArrayList<>();
+
+    @ElementCollection
+    private List<ProductDB> products = new ArrayList<>();
+
     public OrderDB() {}
 
-    // Convenience constructor
-    public OrderDB(String name) {
-        this.name = name;
+    public OrderDB(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -35,14 +41,37 @@ public class OrderDB {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserEmail() {
+        return userEmail;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public List<Long> getProductIds() {
+        return productIds;
+    }
+    public void setProductIds(List<Long> productIds) {
+        this.productIds = productIds != null ? productIds : new ArrayList<>();
+    }
+
+    public List<ProductDB> getProducts() {
+        return products;
+    }
+    public void setProducts(List<ProductDB> products) {
+        this.products = products != null ? products : new ArrayList<>();
+    }
+
+    public float compute_total() {
+        float total = products.stream()
+            .map(ProductDB::getPrice)
+            .reduce(0f, Float::sum);
+        if (total <= 0) {
+            throw new IllegalArgumentException("Total amount must be greater than 0");
+        }
+        return total;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,9 +85,8 @@ public class OrderDB {
         return 31;
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Order{id=" + id + ", name='" + name + "'}";
+        return "Order{id=" + id + ", userEmail='" + userEmail + "', productIds=" + productIds + "}";
     }
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON to XML Converter</title>
+</head>
+<body>
+    <h1>Convert JSON to XML and Vice Versa</h1>
+    
+    <h2>JSON to XML</h2>
+    <form th:action="@{/convertJsonToXml}" method="post" th:object="${jsonConversion}">
+        <textarea th:field="*{jsonInput}" rows="10" cols="50" required></textarea><br>
+        <button type="submit">Convert JSON to XML</button>
+    </form>
+    
+    <h2>XML to JSON</h2>
+    <form th:action="@{/convertXmlToJson}" method="post" th:object="${xmlConversion}">
+        <textarea th:field="*{xmlInput}" rows="10" cols="50" required></textarea><br>
+        <button type="submit">Convert XML to JSON</button>
+    </form>
+</body>
+</html>

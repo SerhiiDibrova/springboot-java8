@@ -1,4 +1,3 @@
-// src/main/java/hello/model/Product.java
 package hello.entity;
 
 import javax.persistence.Entity;
@@ -6,10 +5,8 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
-/**
- * Product entity mapped to the "products" table.
- */
 @Entity
 @Table(name = "product")
 public class ProductDB {
@@ -18,17 +15,26 @@ public class ProductDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
-    // Default constructor required by JPA
+    private String description;
+
+    @Column(name = "price")
+    private float price;
+
+    @Column(name = "in_stock")
+    private int inStock;
+
     public ProductDB() {}
 
-    // Convenience constructor
-    public ProductDB(String name) {
+    public ProductDB(String name, String description, float price, int inStock) {
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.inStock = inStock;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -43,7 +49,27 @@ public class ProductDB {
         this.name = name;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getInStock() {
+        return inStock;
+    }
+    public void setInStock(int inStock) {
+        this.inStock = inStock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,9 +83,8 @@ public class ProductDB {
         return 31;
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Product{id=" + id + ", name='" + name + "'}";
+        return "Product{id=" + id + ", name='" + name + "', description='" + description + "', price=" + price + ", inStock=" + inStock + "}";
     }
 }
