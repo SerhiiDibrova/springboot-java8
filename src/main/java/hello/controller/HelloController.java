@@ -5,7 +5,9 @@ import hello.model.SimpleTimeClient;
 import hello.model.Topic;
 import hello.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
@@ -19,9 +21,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 public class HelloController {
-
 
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
@@ -34,15 +35,9 @@ public class HelloController {
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
 
-
     @Autowired
     private TopicService topicService;
 
-    /**
-     * Java 8 Date Time example
-     *
-     * @return
-     */
     @RequestMapping("/datetime")
     public String index() {
         TimeClient myTimeClient = new SimpleTimeClient();
@@ -54,18 +49,10 @@ public class HelloController {
                 "Is this a leap year ?  " + String.valueOf(LocalDate.now().isLeapYear()) + "----------------------" +
                 "Default system zone id   " + String.valueOf(ZoneId.systemDefault()) + "-------------------" +
                 "Time in California: " + myTimeClient.getZonedDateTime("Canada/Central").toString();
-
     }
 
-
-    /**
-     * String Operations in Java 8
-     *
-     * @return
-     */
     @RequestMapping("/topic/string/operation")
     public String showStringOperation() {
-
         String join = topicService.returnAllTopicIDWithStringSlicing();
         String makeDistinctAndSortCharacters = topicService.makeDistinctAndSortCharacters(join);
         String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin = topicService
@@ -76,14 +63,8 @@ public class HelloController {
                 + makeDistinctAndSortCharactersTemplate + makeDistinctAndSortCharacters
                 + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate + splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin
                 + findIdHavingCharacterTemplate + findIdHavingCharacter;
-
     }
 
-
-    /**
-     * File Operation in Java 8
-     * @return
-     */
     @RequestMapping("/topic/file/operation")
     public String showFileOperation() {
         String findAllFilesInPathAndSort = topicService.findAllFilesInPathAndSort();
@@ -96,6 +77,8 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
-
-
+    @GetMapping("/")
+    public String getBasicForm(Model model) {
+        return "index";
+    }
 }

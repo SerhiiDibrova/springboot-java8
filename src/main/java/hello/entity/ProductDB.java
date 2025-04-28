@@ -1,4 +1,3 @@
-// src/main/java/hello/model/Product.java
 package hello.entity;
 
 import javax.persistence.Entity;
@@ -6,12 +5,12 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import lombok.Data;
 
-/**
- * Product entity mapped to the "products" table.
- */
 @Entity
 @Table(name = "product")
+@Data
 public class ProductDB {
 
     @Id
@@ -20,46 +19,69 @@ public class ProductDB {
 
     private String name;
 
-    // Default constructor required by JPA
+    @Column(length = 500)
+    private String description;
+
+    private Double price;
+
+    private Boolean inStock;
+
     public ProductDB() {}
 
-    // Convenience constructor
-    public ProductDB(String name) {
+    public ProductDB(String name, String description, Double price, Boolean inStock) {
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.inStock = inStock;
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
+    public String getDescription() {
+        return description;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Boolean getInStock() {
+        return inStock;
+    }
+
+    public void setInStock(Boolean inStock) {
+        this.inStock = inStock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ProductDB)) return false;
         ProductDB other = (ProductDB) o;
-        return id != null && id.equals(other.getId());
+        return id != null && id.equals(other.getId()) &&
+               name != null && name.equals(other.getName()) &&
+               description != null && description.equals(other.getDescription()) &&
+               price != null && price.equals(other.getPrice()) &&
+               inStock != null && inStock.equals(other.getInStock());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return 31 * (id != null ? id.hashCode() : 0) +
+               31 * (name != null ? name.hashCode() : 0) +
+               31 * (description != null ? description.hashCode() : 0) +
+               31 * (price != null ? price.hashCode() : 0) +
+               31 * (inStock != null ? inStock.hashCode() : 0);
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Product{id=" + id + ", name='" + name + "'}";
+        return "Product{id=" + id + ", name='" + name + "', description='" + description + "', price=" + price + ", inStock=" + inStock + "}";
     }
 }

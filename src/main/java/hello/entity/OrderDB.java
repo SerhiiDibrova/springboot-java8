@@ -5,10 +5,8 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.List;
 
-/**
- * Order entity mapped to the "orders" table.
- */
 @Entity
 @Table(name = "order")
 public class OrderDB {
@@ -18,16 +16,17 @@ public class OrderDB {
     private Long id;
 
     private String name;
+    private String userEmail;
+    private List<Long> productIds;
 
-    // Default constructor required by JPA
     public OrderDB() {}
 
-    // Convenience constructor
-    public OrderDB(String name) {
+    public OrderDB(String name, String userEmail, List<Long> productIds) {
         this.name = name;
+        this.userEmail = userEmail;
+        this.productIds = productIds;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -42,23 +41,41 @@ public class OrderDB {
         this.name = name;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public String getUserEmail() {
+        return userEmail;
+    }
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public List<Long> getProductIds() {
+        return productIds;
+    }
+    public void setProductIds(List<Long> productIds) {
+        this.productIds = productIds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderDB)) return false;
         OrderDB other = (OrderDB) o;
-        return id != null && id.equals(other.getId());
+        return id != null && id.equals(other.getId()) &&
+               name != null && name.equals(other.getName()) &&
+               userEmail != null && userEmail.equals(other.getUserEmail()) &&
+               productIds != null && productIds.equals(other.getProductIds());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return 31 * (id != null ? id.hashCode() : 0) +
+               31 * (name != null ? name.hashCode() : 0) +
+               31 * (userEmail != null ? userEmail.hashCode() : 0) +
+               31 * (productIds != null ? productIds.hashCode() : 0);
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Order{id=" + id + ", name='" + name + "'}";
+        return "Order{id=" + id + ", name='" + name + "', userEmail='" + userEmail + "', productIds=" + productIds + "}";
     }
 }
