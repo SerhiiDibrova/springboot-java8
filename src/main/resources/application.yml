@@ -1,0 +1,26 @@
+package src.main.resources;
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_database
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: my_username
+    password: my_password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  validation:
+    enabled: true
+  error:
+    handling:
+      enabled: true
+  performance:
+    connection:
+      pool:
+        max-size: 20
+        min-size: 5
+        timeout: 30000
