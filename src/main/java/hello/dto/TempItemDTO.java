@@ -1,0 +1,228 @@
+package hello.dto;
+
+import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import hello.entity.TempItem;
+
+public class TempItemDTO {
+    @NotNull
+    private Integer orderId;
+    private String customerSegment;
+    private String regionName;
+    private String productCategory;
+    private BigDecimal salesAmount;
+    private BigDecimal taxRate;
+    private Integer stockLevel;
+    private BigDecimal shippingCost;
+    private Integer warehouseCapacity;
+    private Integer employeePerformance;
+    private BigDecimal logisticsEfficiency;
+    private BigDecimal supplierRating;
+    private BigDecimal itSecurityRating;
+    private BigDecimal refundAmount;
+    private BigDecimal qualityAssuranceScore;
+    private BigDecimal promotionDiscount;
+    private BigDecimal financialStabilityIndex;
+    private String riskCategory;
+    private BigDecimal ecoSustainabilityIndex;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCustomerSegment() {
+        return customerSegment;
+    }
+
+    public void setCustomerSegment(String customerSegment) {
+        this.customerSegment = customerSegment;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    public BigDecimal getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(BigDecimal salesAmount) {
+        this.salesAmount = salesAmount;
+    }
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public Integer getStockLevel() {
+        return stockLevel;
+    }
+
+    public void setStockLevel(Integer stockLevel) {
+        this.stockLevel = stockLevel;
+    }
+
+    public BigDecimal getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(BigDecimal shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
+    public Integer getWarehouseCapacity() {
+        return warehouseCapacity;
+    }
+
+    public void setWarehouseCapacity(Integer warehouseCapacity) {
+        this.warehouseCapacity = warehouseCapacity;
+    }
+
+    public Integer getEmployeePerformance() {
+        return employeePerformance;
+    }
+
+    public void setEmployeePerformance(Integer employeePerformance) {
+        this.employeePerformance = employeePerformance;
+    }
+
+    public BigDecimal getLogisticsEfficiency() {
+        return logisticsEfficiency;
+    }
+
+    public void setLogisticsEfficiency(BigDecimal logisticsEfficiency) {
+        this.logisticsEfficiency = logisticsEfficiency;
+    }
+
+    public BigDecimal getSupplierRating() {
+        return supplierRating;
+    }
+
+    public void setSupplierRating(BigDecimal supplierRating) {
+        this.supplierRating = supplierRating;
+    }
+
+    public BigDecimal getItSecurityRating() {
+        return itSecurityRating;
+    }
+
+    public void setItSecurityRating(BigDecimal itSecurityRating) {
+        this.itSecurityRating = itSecurityRating;
+    }
+
+    public BigDecimal getRefundAmount() {
+        return refundAmount;
+    }
+
+    public void setRefundAmount(BigDecimal refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+
+    public BigDecimal getQualityAssuranceScore() {
+        return qualityAssuranceScore;
+    }
+
+    public void setQualityAssuranceScore(BigDecimal qualityAssuranceScore) {
+        this.qualityAssuranceScore = qualityAssuranceScore;
+    }
+
+    public BigDecimal getPromotionDiscount() {
+        return promotionDiscount;
+    }
+
+    public void setPromotionDiscount(BigDecimal promotionDiscount) {
+        this.promotionDiscount = promotionDiscount;
+    }
+
+    public BigDecimal getFinancialStabilityIndex() {
+        return financialStabilityIndex;
+    }
+
+    public void setFinancialStabilityIndex(BigDecimal financialStabilityIndex) {
+        this.financialStabilityIndex = financialStabilityIndex;
+    }
+
+    public String getRiskCategory() {
+        return riskCategory;
+    }
+
+    public void setRiskCategory(String riskCategory) {
+        this.riskCategory = riskCategory;
+    }
+
+    public BigDecimal getEcoSustainabilityIndex() {
+        return ecoSustainabilityIndex;
+    }
+
+    public void setEcoSustainabilityIndex(BigDecimal ecoSustainabilityIndex) {
+        this.ecoSustainabilityIndex = ecoSustainabilityIndex;
+    }
+
+    public TempItem toEntity() {
+        TempItem item = new TempItem();
+        item.setOrderId(this.orderId);
+        item.setCustomerSegment(this.customerSegment);
+        item.setRegionName(this.regionName);
+        item.setProductCategory(this.productCategory);
+        item.setSalesAmount(this.salesAmount);
+        item.setTaxRate(this.taxRate);
+        item.setStockLevel(this.stockLevel);
+        item.setShippingCost(this.shippingCost);
+        item.setWarehouseCapacity(this.warehouseCapacity);
+        item.setEmployeePerformance(this.employeePerformance);
+        item.setLogisticsEfficiency(this.logisticsEfficiency);
+        item.setSupplierRating(this.supplierRating);
+        item.setItSecurityRating(this.itSecurityRating);
+        item.setRefundAmount(this.refundAmount);
+        item.setQualityAssuranceScore(this.qualityAssuranceScore);
+        item.setPromotionDiscount(this.promotionDiscount);
+        item.setFinancialStabilityIndex(this.financialStabilityIndex);
+        item.setRiskCategory(this.riskCategory);
+        item.setEcoSustainabilityIndex(this.ecoSustainabilityIndex);
+        return item;
+    }
+
+    public static TempItemDTO fromEntity(TempItem item) {
+        TempItemDTO dto = new TempItemDTO();
+        dto.setOrderId(item.getOrderId());
+        dto.setCustomerSegment(item.getCustomerSegment());
+        dto.setRegionName(item.getRegionName());
+        dto.setProductCategory(item.getProductCategory());
+        dto.setSalesAmount(item.getSalesAmount());
+        dto.setTaxRate(item.getTaxRate());
+        dto.setStockLevel(item.getStockLevel());
+        dto.setShippingCost(item.getShippingCost());
+        dto.setWarehouseCapacity(item.getWarehouseCapacity());
+        dto.setEmployeePerformance(item.getEmployeePerformance());
+        dto.setLogisticsEfficiency(item.getLogisticsEfficiency());
+        dto.setSupplierRating(item.getSupplierRating());
+        dto.setItSecurityRating(item.getItSecurityRating());
+        dto.setRefundAmount(item.getRefundAmount());
+        dto.setQualityAssuranceScore(item.getQualityAssuranceScore());
+        dto.setPromotionDiscount(item.getPromotionDiscount());
+        dto.setFinancialStabilityIndex(item.getFinancialStabilityIndex());
+        dto.setRiskCategory(item.getRiskCategory());
+        dto.setEcoSustainabilityIndex(item.getEcoSustainabilityIndex());
+        return dto;
+    }
+}
