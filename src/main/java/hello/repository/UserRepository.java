@@ -1,10 +1,12 @@
 package hello.repository;
 
+import hello.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import hello.entity.UserDB;
+import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserDB, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findTopByDefaultTrueAndRole_Role(String role);
 }
