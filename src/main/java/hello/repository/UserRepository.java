@@ -1,10 +1,11 @@
 package hello.repository;
 
+import hello.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
 
-import hello.entity.UserDB;
-
-@Repository
-public interface UserRepository extends JpaRepository<UserDB, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
+    @Query("SELECT u FROM User u JOIN Role r ON u.roleId = r.id WHERE u.isDefault = true AND r.role = 'system'")
+    Optional<User> findDefaultManager();
 }
