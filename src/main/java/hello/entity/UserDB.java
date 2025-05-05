@@ -5,9 +5,10 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserDB {
 
     @Id
@@ -16,15 +17,20 @@ public class UserDB {
 
     private String name;
 
-    // Default constructor required by JPA
+    @Column(name = "role_id", nullable = false)
+    private Integer roleId;
+
+    @Column(name = "default", nullable = false)
+    private Integer defaultStatus = 0;
+
     public UserDB() {}
 
-    // Convenience constructor
-    public UserDB(String name) {
+    public UserDB(String name, Integer roleId, Integer defaultStatus) {
         this.name = name;
+        this.roleId = roleId;
+        this.defaultStatus = defaultStatus;
     }
 
-    // Getters & Setters
     public Integer getId() {
         return id;
     }
@@ -39,7 +45,20 @@ public class UserDB {
         this.name = name;
     }
 
-    // Optional: equals/hashCode based on id
+    public Integer getRoleId() {
+        return roleId;
+    }
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public Integer getDefaultStatus() {
+        return defaultStatus;
+    }
+    public void setDefaultStatus(Integer defaultStatus) {
+        this.defaultStatus = defaultStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,9 +72,8 @@ public class UserDB {
         return 31;
     }
 
-    // Optional: nice to have
     @Override
     public String toString() {
-        return "User{id=" + id + ", name='" + name + "'}";
+        return "User{id=" + id + ", name='" + name + "', roleId=" + roleId + ", defaultStatus=" + defaultStatus + "}";
     }
 }
