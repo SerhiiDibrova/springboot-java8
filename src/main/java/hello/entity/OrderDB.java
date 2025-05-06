@@ -5,12 +5,14 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Order entity mapped to the "orders" table.
- */
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class OrderDB {
 
     @Id
@@ -19,15 +21,20 @@ public class OrderDB {
 
     private String name;
 
-    // Default constructor required by JPA
+    @NotNull
+    @Column(nullable = false)
+    private Double total_amount;
+
+    @OneToMany(mappedBy = "order")
+    private List<ProductDB> products = new ArrayList<>();
+
     public OrderDB() {}
 
-    // Convenience constructor
     public OrderDB(String name) {
         this.name = name;
+        this.products = new ArrayList<>();
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -42,23 +49,44 @@ public class OrderDB {
         this.name = name;
     }
 
-    // equals/hashCode based on id for proper identity semantics
+    public Double getTotalAmount() {
+        return total_amount;
+    }
+    public void setTotalAmount(Double total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    public List<ProductDB> getProducts() {
+        return products;
+    }
+    public void setProducts(List<ProductDB> products) {
+        this.products = products;
+        compute_total();
+    }
+
+    public void compute_total() {
+        double total = products.stream().mapToDouble(ProductDB::getPrice).sum();
+        if (total <= 0) {
+            throw new IllegalArgumentException("Total amount must be greater than zero.");
+        }
+        this.total_amount = total;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderDB)) return false;
         OrderDB other = (OrderDB) o;
-        return id != null && id.equals(other.getId());
+        return id != null && id.equals(other.getId()) && total_amount != null && total_amount.equals(other.getTotalAmount());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return 31 * (id != null ? id.hashCode() : 0) + (total_amount != null ? total_amount.hashCode() : 0);
     }
 
-    // Helpful toString()
     @Override
     public String toString() {
-        return "Order{id=" + id + ", name='" + name + "'}";
+        return "Order{id=" + id + ", name='" + name + "', total_amount=" + total_amount + "}";
     }
 }
