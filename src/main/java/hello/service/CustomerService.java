@@ -3,7 +3,8 @@ package hello.service;
 import hello.model.Customer;
 import hello.model.UserType;
 import org.springframework.stereotype.Service;
-
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -112,5 +113,19 @@ public class CustomerService {
         return String.format(
                 "{\n \"id\": %d,\n \"firstName\": \"%s\",\n \"lastName\": \"%s\",\n \"userType\": \"%s\"\n}",
                 customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getUserType());
+    }
+
+    public String method_c() {
+        class C {
+            public String method_c() {
+                return "Method C executed";
+            }
+        }
+        C c = new C();
+        return c.method_c();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(CustomerService.class, args);
     }
 }
