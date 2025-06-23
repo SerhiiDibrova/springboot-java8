@@ -3,10 +3,11 @@ package hello.controller;
 import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
-import hello.service.TopicService;
+import hello.service.AService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ public class HelloController {
 
 
     @Autowired
-    private TopicService topicService;
+    private AService aService;
 
     /**
      * Java 8 Date Time example
@@ -66,11 +67,11 @@ public class HelloController {
     @RequestMapping("/topic/string/operation")
     public String showStringOperation() {
 
-        String join = topicService.returnAllTopicIDWithStringSlicing();
-        String makeDistinctAndSortCharacters = topicService.makeDistinctAndSortCharacters(join);
-        String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin = topicService
+        String join = aService.returnAllTopicIDWithStringSlicing();
+        String makeDistinctAndSortCharacters = aService.makeDistinctAndSortCharacters(join);
+        String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin = aService
                 .splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoin(join);
-        String findIdHavingCharacter = topicService.findIdHavingCharacter();
+        String findIdHavingCharacter = aService.findIdHavingCharacter();
 
         return joinTemplate + join
                 + makeDistinctAndSortCharactersTemplate + makeDistinctAndSortCharacters
@@ -86,16 +87,19 @@ public class HelloController {
      */
     @RequestMapping("/topic/file/operation")
     public String showFileOperation() {
-        String findAllFilesInPathAndSort = topicService.findAllFilesInPathAndSort();
-        String findParticularFileInPathAndSort = topicService.findParticularFileInPathAndSort();
-        String findParticularFileInPathAndSortWithWalkFunction = topicService.findParticularFileInPathAndSortWithWalkFunction();
-        String readFileWithStreamFunction = topicService.readFileWithStreamFunction();
+        String findAllFilesInPathAndSort = aService.findAllFilesInPathAndSort();
+        String findParticularFileInPathAndSort = aService.findParticularFileInPathAndSort();
+        String findParticularFileInPathAndSortWithWalkFunction = aService.findParticularFileInPathAndSortWithWalkFunction();
+        String readFileWithStreamFunction = aService.readFileWithStreamFunction();
         return findAllFilesInPathAndSortTemplate + findAllFilesInPathAndSort
                 + findParticularFileInPathAndSortTemplate + findParticularFileInPathAndSort
                 + findParticularFileInPathAndSortWithWalkFunctionTemplate + findParticularFileInPathAndSortWithWalkFunction
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
-
+    @GetMapping("/methodA")
+    public String callMethodA() {
+        return aService.methodA();
+    }
 
 }
