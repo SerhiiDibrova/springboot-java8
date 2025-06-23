@@ -2,8 +2,8 @@ package hello.service;
 
 import hello.model.Customer;
 import hello.model.UserType;
+import hello.model.A;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -112,5 +112,17 @@ public class CustomerService {
         return String.format(
                 "{\n \"id\": %d,\n \"firstName\": \"%s\",\n \"lastName\": \"%s\",\n \"userType\": \"%s\"\n}",
                 customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getUserType());
+    }
+
+    public String method_a(Customer customer) {
+        A a = new A();
+        return a.method_a(customer.getFirstName());
+    }
+
+    public void integrateMethodAIntoBusinessLogic() {
+        for (Customer customer : customers) {
+            String result = method_a(customer);
+            System.out.println("Method A result for customer " + customer.getFirstName() + ": " + result);
+        }
     }
 }
