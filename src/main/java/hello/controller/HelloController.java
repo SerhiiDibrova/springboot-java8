@@ -3,10 +3,12 @@ package hello.controller;
 import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
+import hello.model.A;
 import hello.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,6 +98,9 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
-
-
+    @GetMapping("/hello")
+    public String hello() {
+        A a = new A();
+        return a.methodA();
+    }
 }
