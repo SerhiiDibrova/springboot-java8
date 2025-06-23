@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import hello.model.Customer;
 import hello.model.Quote;
+import hello.model.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,8 @@ public class Application implements CommandLineRunner {
             System.out.println(beanName);
         }
 
-        RestTemplate restTemplate =  new RestTemplate();
-        Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-        log.info(quote.toString());
+        C c = new C();
+        log.info(c.method_c());
     }
 
 
