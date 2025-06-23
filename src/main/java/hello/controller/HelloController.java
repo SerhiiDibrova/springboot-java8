@@ -4,6 +4,7 @@ import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
 import hello.service.TopicService;
+import hello.service.UtilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +34,14 @@ public class HelloController {
     String findParticularFileInPathAndSortTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort : ";
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
+    String utilityFunctionTemplate = "---------Utility Function:  ";
 
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private UtilityService utilityService;
 
     /**
      * Java 8 Date Time example
@@ -96,6 +101,15 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
+    @RequestMapping("/utility/function")
+    public String showUtilityFunction() {
+        String utilityFunction = utilityService.utilityFunction();
+        return utilityFunctionTemplate + utilityFunction;
+    }
 
-
+    @RequestMapping("/utility/function/with/topic/service")
+    public String showUtilityFunctionWithTopicService() {
+        String utilityFunction = utilityService.utilityFunctionWithTopicService(topicService);
+        return utilityFunctionTemplate + utilityFunction;
+    }
 }
