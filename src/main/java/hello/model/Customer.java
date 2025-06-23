@@ -17,9 +17,23 @@ public class Customer {
     }
 
     public Customer(long id, String firstName, String lastName) {
+        if (id < 0) {
+            throw new IllegalArgumentException("Id cannot be negative");
+        }
+        if (firstName == null || firstName.isEmpty()) {
+            throw new IllegalArgumentException("First name cannot be null or empty");
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be null or empty");
+        }
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Customer(long id, String firstName, String lastName, UserType userType) {
+        this(id, firstName, lastName);
+        this.userType = userType;
     }
 
     public UserType getUserType() {
@@ -35,6 +49,9 @@ public class Customer {
     }
 
     public void setId(long id) {
+        if (id < 0) {
+            throw new IllegalArgumentException("Id cannot be negative");
+        }
         this.id = id;
     }
 
@@ -43,6 +60,9 @@ public class Customer {
     }
 
     public void setFirstName(String firstName) {
+        if (firstName == null || firstName.isEmpty()) {
+            throw new IllegalArgumentException("First name cannot be null or empty");
+        }
         this.firstName = firstName;
     }
 
@@ -51,6 +71,16 @@ public class Customer {
     }
 
     public void setLastName(String lastName) {
+        if (lastName == null || lastName.isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be null or empty");
+        }
         this.lastName = lastName;
+    }
+
+    public String method_c() {
+        if (firstName == null || lastName == null) {
+            throw new NullPointerException("First name and last name cannot be null");
+        }
+        return "Customer " + firstName + " " + lastName + " with user type " + userType;
     }
 }

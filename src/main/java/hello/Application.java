@@ -38,6 +38,9 @@ public class Application implements CommandLineRunner {
         RestTemplate restTemplate =  new RestTemplate();
         Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
         log.info(quote.toString());
+        
+        Customer customer = new Customer(1L, "John", "Doe");
+        customer.method_c();
     }
 
 
@@ -84,5 +87,7 @@ public class Application implements CommandLineRunner {
                 (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
         ).forEach(customer -> log.info(customer.toString()));
 
+        Customer customer = new Customer(1L, "John", "Doe");
+        customer.method_c();
     }
 }
