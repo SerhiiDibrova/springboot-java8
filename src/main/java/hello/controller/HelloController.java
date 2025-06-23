@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RestController
 public class HelloController {
 
-
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
     String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate = "-------------Split All Id With Colon," +
@@ -33,16 +32,11 @@ public class HelloController {
     String findParticularFileInPathAndSortTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort : ";
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
-
+    String greetTemplate = "Greetings from Spring Boot! ";
 
     @Autowired
     private TopicService topicService;
 
-    /**
-     * Java 8 Date Time example
-     *
-     * @return
-     */
     @RequestMapping("/datetime")
     public String index() {
         TimeClient myTimeClient = new SimpleTimeClient();
@@ -57,12 +51,6 @@ public class HelloController {
 
     }
 
-
-    /**
-     * String Operations in Java 8
-     *
-     * @return
-     */
     @RequestMapping("/topic/string/operation")
     public String showStringOperation() {
 
@@ -79,11 +67,6 @@ public class HelloController {
 
     }
 
-
-    /**
-     * File Operation in Java 8
-     * @return
-     */
     @RequestMapping("/topic/file/operation")
     public String showFileOperation() {
         String findAllFilesInPathAndSort = topicService.findAllFilesInPathAndSort();
@@ -96,6 +79,14 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
+    @RequestMapping("/greet")
+    public String greet() {
+        return greetTemplate + "Hello, World!";
+    }
 
-
+    public static void main(String[] args) {
+        HelloController helloController = new HelloController();
+        String result = helloController.greet();
+        System.out.println(result + " Completed.");
+    }
 }
