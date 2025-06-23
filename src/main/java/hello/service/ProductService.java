@@ -19,5 +19,17 @@ public class ProductService {
                 .map(item -> new ProductDTO(item.getId(), item.getName()))
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id " + id));
     }
-}
 
+    public ProductDTO getProduct(Long id) {
+        try {
+            ProductDTO product = this.getById(id);
+            if (product != null) {
+                return product;
+            } else {
+                throw new EntityNotFoundException("Product not found with id " + id);
+            }
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Product not found with id " + id, e);
+        }
+    }
+}

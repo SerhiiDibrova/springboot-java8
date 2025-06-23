@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import hello.model.Customer;
 import hello.model.Quote;
+import hello.model.Product;
+import hello.model.ProductService;
+import hello.model.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+@EnableJpaRepositories
 public class Application implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -55,9 +60,24 @@ public class Application implements CommandLineRunner {
         };
     }
 
+    @Bean
+    public UserService userService() {
+        return new UserService();
+    }
+
+    @Bean
+    public ProductService productService() {
+        return new ProductService();
+    }
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ProductService productService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -84,5 +104,7 @@ public class Application implements CommandLineRunner {
                 (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
         ).forEach(customer -> log.info(customer.toString()));
 
+        log.info("Getting user from UserService: " + userService.getUser());
+        log.info("Getting product from ProductService: " + productService.getProduct());
     }
 }

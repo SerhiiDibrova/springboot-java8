@@ -19,5 +19,13 @@ public class UserService {
                 .map(item -> new UserDTO(item.getId(), item.getName()))
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
     }
-}
 
+    public UserDTO getUser(Integer id) {
+        return getById(id);
+    }
+
+    public String getUserAsString(Integer id) {
+        UserDTO user = getUser(id);
+        return "User ID: " + user.getId() + ", Name: " + user.getName();
+    }
+}
