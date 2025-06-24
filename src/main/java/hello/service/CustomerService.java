@@ -3,7 +3,8 @@ package hello.service;
 import hello.model.Customer;
 import hello.model.UserType;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +21,7 @@ import java.util.stream.IntStream;
 public class CustomerService {
 
     private final List<Customer> customers = new ArrayList<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     public CustomerService() {
         customers.add(new Customer(1, "John", "Doe"));
@@ -112,5 +114,10 @@ public class CustomerService {
         return String.format(
                 "{\n \"id\": %d,\n \"firstName\": \"%s\",\n \"lastName\": \"%s\",\n \"userType\": \"%s\"\n}",
                 customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getUserType());
+    }
+
+    public String methodA() {
+        LOGGER.info("Method A called");
+        return "Method A result";
     }
 }
