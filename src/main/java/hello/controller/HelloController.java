@@ -4,6 +4,9 @@ import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
 import hello.service.TopicService;
+import hello.utility.UtilityFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +25,6 @@ import java.util.stream.Collectors;
 @RestController
 public class HelloController {
 
-
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
     String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate = "-------------Split All Id With Colon," +
@@ -34,6 +36,7 @@ public class HelloController {
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
 
+    private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @Autowired
     private TopicService topicService;
@@ -57,7 +60,6 @@ public class HelloController {
 
     }
 
-
     /**
      * String Operations in Java 8
      *
@@ -79,7 +81,6 @@ public class HelloController {
 
     }
 
-
     /**
      * File Operation in Java 8
      * @return
@@ -96,6 +97,15 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
+    @RequestMapping("/method_a")
+    public String method_a() {
+        logger.info("Method A called");
+        return "A";
+    }
 
-
+    @RequestMapping("/utility")
+    public String utility() {
+        UtilityFunction utilityFunction = new UtilityFunction();
+        return utilityFunction.utilityFunction();
+    }
 }

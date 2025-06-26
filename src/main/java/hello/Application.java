@@ -38,8 +38,14 @@ public class Application implements CommandLineRunner {
         RestTemplate restTemplate =  new RestTemplate();
         Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
         log.info(quote.toString());
+
+        Application application = new Application();
+        application.method_c();
     }
 
+    public void method_c() {
+        log.info("Invoked method_c");
+    }
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -54,7 +60,6 @@ public class Application implements CommandLineRunner {
             log.info(quote.toString());
         };
     }
-
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -84,5 +89,10 @@ public class Application implements CommandLineRunner {
                 (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
         ).forEach(customer -> log.info(customer.toString()));
 
+        log.info("Querying for all customer records:");
+        jdbcTemplate.query(
+                "SELECT id, first_name, last_name FROM customers",
+                (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
+        ).forEach(customer -> log.info(customer.toString()));
     }
 }
