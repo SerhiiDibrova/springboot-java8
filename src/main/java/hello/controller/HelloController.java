@@ -4,9 +4,11 @@ import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
 import hello.service.TopicService;
+import hello.service.AbendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +24,6 @@ import java.util.stream.Collectors;
 @RestController
 public class HelloController {
 
-
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
     String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate = "-------------Split All Id With Colon," +
@@ -34,9 +35,11 @@ public class HelloController {
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
 
-
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private AbendService abendService;
 
     /**
      * Java 8 Date Time example
@@ -56,7 +59,6 @@ public class HelloController {
                 "Time in California: " + myTimeClient.getZonedDateTime("Canada/Central").toString();
 
     }
-
 
     /**
      * String Operations in Java 8
@@ -79,7 +81,6 @@ public class HelloController {
 
     }
 
-
     /**
      * File Operation in Java 8
      * @return
@@ -96,6 +97,9 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
-
-
+    @GetMapping("/abendProgram")
+    public String abendProgram() {
+        abendService.abendProgram();
+        return "Abend program called";
+    }
 }
