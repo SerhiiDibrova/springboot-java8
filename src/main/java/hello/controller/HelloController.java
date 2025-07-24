@@ -4,6 +4,7 @@ import hello.declaration.TimeClient;
 import hello.model.SimpleTimeClient;
 import hello.model.Topic;
 import hello.service.TopicService;
+import hello.service.IoStatusHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import java.util.stream.Collectors;
 @RestController
 public class HelloController {
 
-
     String joinTemplate = "Joining All String ID's with JOIN method: ";
     String makeDistinctAndSortCharactersTemplate = "-------------Get all ID characters, select distict and sort with ID=   ";
     String splitAllIdWithColonSelectIDWithJavaKeywordThenSortThenJoinTemplate = "-------------Split All Id With Colon," +
@@ -33,10 +33,13 @@ public class HelloController {
     String findParticularFileInPathAndSortTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort : ";
     String findParticularFileInPathAndSortWithWalkFunctionTemplate = "----------Find File in present directory which strats with \"grad\",provided maximum depth=25 and sort :  with walk function";
     String readFileWithStreamFunctionTemplate = "---------Read \"temp.txt\" file with stream functions, having \"print\" witin it:  ";
-
+    String ioStatusTemplate = "I/O status displayed: ";
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private IoStatusHandler ioStatusHandler;
 
     /**
      * Java 8 Date Time example
@@ -56,7 +59,6 @@ public class HelloController {
                 "Time in California: " + myTimeClient.getZonedDateTime("Canada/Central").toString();
 
     }
-
 
     /**
      * String Operations in Java 8
@@ -79,7 +81,6 @@ public class HelloController {
 
     }
 
-
     /**
      * File Operation in Java 8
      * @return
@@ -96,6 +97,21 @@ public class HelloController {
                 + readFileWithStreamFunctionTemplate + readFileWithStreamFunction;
     }
 
-
-
+    @RequestMapping("/io-status")
+    public String getIoStatus() {
+        try {
+            String ioStatus = ioStatusHandler.getIoStatus();
+            if (ioStatus != null && !ioStatus.isEmpty()) {
+                if (ioStatus.matches("\\d+")) {
+                    return ioStatusTemplate + ioStatusHandler.handleNumericIoStatus(ioStatus);
+                } else {
+                    return ioStatusTemplate + ioStatusHandler.handleNonNumericIoStatus(ioStatus);
+                }
+            } else {
+                return ioStatusTemplate + "No I/O status available";
+            }
+        } catch (Exception e) {
+            return ioStatusTemplate + "An error occurred while checking I/O status: " + e.getMessage();
+        }
+    }
 }
